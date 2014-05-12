@@ -1,9 +1,8 @@
 package main
 
-import (
-	"os"
-	"github.com/codegangsta/cli"
-)
+import "os"
+import "github.com/codegangsta/cli"
+import "github.com/garyburd/redigo/redis"
 
 func main() {
 	app := cli.NewApp()
