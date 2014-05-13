@@ -1,16 +1,17 @@
 package main
 
-import "os"
-import "github.com/codegangsta/cli"
-import "github.com/garyburd/redigo/redis"
+import (
+  "github.com/hoisie/web"
+)
+
+func handleFilter(ctx *web.Context, val string) string {
+  for k,v := range ctx.Params {
+    println(k, v)
+  }
+  return "Koushik is the best"
+}
 
 func main() {
-	app := cli.NewApp()
-	app.Name = "matcher"
-	app.Usage = "Matching goodness"
-	app.Action = func(c *cli.Context) {
-		println("boom! I say!")
-	}
-
-	app.Run(os.Args)
+  web.Post("(.*)", handleFilter)
+  web.Run("0.0.0.0:9999")
 }
