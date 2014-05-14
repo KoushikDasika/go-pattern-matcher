@@ -14,6 +14,7 @@ func getFactsFromRedis(conn redis.Conn, order_id string) string {
 }
 
 func main() {
+  /*
   conn, err := redis.Dial("tcp", ":6379")
   if err != nil {
         // handle error
@@ -27,4 +28,25 @@ func main() {
 
   fmt.Println("facts are %s\n", facts)
   defer conn.Close()
+  */
+
+  blah := []map[string]interface{} {
+    map[string]interface{} {
+      "id": 1,
+      "type": "CheckoutItemSelected",
+    },
+
+    map[string]interface{} {
+      "id": 2,
+      "type": "CheckoutItemRemoved",
+    },
+
+
+  }
+  for i := range blah {
+    for k, v := range blah[i] {
+      fmt.Printf("for %dth fact, for key %s value %s\n", i, k, v)
+    }
+  }
+
 }
