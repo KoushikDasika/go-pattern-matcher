@@ -1,21 +1,54 @@
 package main
 
 import (
+  "github.com/garyburd/redigo/redis"
+  "fmt"
   "github.com/hoisie/web"
   "encoding/json"
+  "strconv"
 )
+
+var conn redis.Conn
+var err error
+
+func getFactsFromRedis(order_id int64) []map[string]interface{} {
+  facts_json, err := redis.String(conn.Do("GET", order_id))
+  if err != nil {
+        // handle error
+  }
+
+  fmt.Println(facts_json)
+
+  var facts []map[string]interface{}
+  err = json.Unmarshal([]byte(facts_json), &facts)
+
+  return facts
+}
 
 func handleFilter(ctx *web.Context, val string) {
   for k,v := range ctx.Params {
     println(k, v)
   }
+  blah, err := strconv.ParseInt(ctx.Params["id"], 10, 64)
 
-  enc := json.NewEncoder(ctx.ResponseWriter)
-  d := map[string]int{"Koushik": 9001, "Charlie": 5}
-  enc.Encode(d)
+  if err != nil {
+     // handle error
+  }
+
+  facts := getFactsFromRedis(blah)
+
+  for i := range facts {
+    fmt.Println(facts[i])
+  }
 }
 
 func main() {
+  conn, err = redis.Dial("tcp", ":6379")
+  if err != nil {
+        // handle error
+  }
+  defer conn.Close()
+
   web.Post("(.*)", handleFilter)
   web.Run("0.0.0.0:9999")
 }
