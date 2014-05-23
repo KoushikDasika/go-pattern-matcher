@@ -17,8 +17,11 @@ func getFactsFromRedis(order_id int64) []map[string]interface{} {
         // handle error
   }
 
+  fmt.Println(facts_json)
+
   var facts []map[string]interface{}
   err = json.Unmarshal([]byte(facts_json), &facts)
+  fmt.Println(facts)
 
   return facts
 }
