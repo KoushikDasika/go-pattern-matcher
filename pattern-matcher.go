@@ -32,12 +32,6 @@ func handleFilter(ctx *web.Context, val string) {
 
   facts := getFactsFromRedis(order_id)
 
-  /*
-  */
-  for i := range facts {
-    fmt.Println(facts[i])
-  }
-
   response, err := json.Marshal(facts)
   if err != nil {
      // handle error
