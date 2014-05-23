@@ -1,6 +1,7 @@
 require 'redis'
 require 'net/http'
 require 'json'
+require 'byebug'
 
 r = Redis.new
 
@@ -15,3 +16,4 @@ r.set 1, facts.to_json
 
 uri = URI.parse("http://localhost:9999")
 response = Net::HTTP.post_form(uri, {"id" => 1})
+puts response.body

@@ -17,8 +17,6 @@ func getFactsFromRedis(order_id int64) []map[string]interface{} {
         // handle error
   }
 
-  fmt.Println(facts_json)
-
   var facts []map[string]interface{}
   err = json.Unmarshal([]byte(facts_json), &facts)
 
@@ -26,20 +24,26 @@ func getFactsFromRedis(order_id int64) []map[string]interface{} {
 }
 
 func handleFilter(ctx *web.Context, val string) {
-  for k,v := range ctx.Params {
-    println(k, v)
-  }
-  blah, err := strconv.ParseInt(ctx.Params["id"], 10, 64)
+  order_id, err := strconv.ParseInt(ctx.Params["id"], 10, 64)
 
   if err != nil {
      // handle error
   }
 
-  facts := getFactsFromRedis(blah)
+  facts := getFactsFromRedis(order_id)
 
+  /*
+  */
   for i := range facts {
     fmt.Println(facts[i])
   }
+
+  response, err := json.Marshal(facts)
+  if err != nil {
+     // handle error
+  }
+
+  ctx.WriteString(string(response[:]))
 }
 
 func main() {
