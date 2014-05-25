@@ -13,12 +13,12 @@ var facts = []map[string]interface{}{
   {"id": 6, "type": "B", "sku": "E035", "amount": 500},
 }
 
-type testpair struct {
+type matching_test_pair struct {
   matches map[string]interface{}
   output []map[string]interface{}
 }
 
-var matching_tests = []testpair{
+var matching_tests = []matching_test_pair{
   { map[string]interface{} {"type": "A"} ,  []map[string]interface{} {
     {"id": 1, "type": "A", "sku": "E031", "amount": 100},
     {"id": 3, "type": "A", "sku": "E033", "amount": 300},
@@ -29,12 +29,16 @@ var matching_tests = []testpair{
 func TestMatchAttributes(t *testing.T) {
   for _, pair := range matching_tests {
     v := MatchAttributes(facts, pair.matches)
-    if v != pair.output {
-      t.Error(
-        "For", pair.matches,
-        "expected", pair.output,
-        "got", v,
-      )
+    for i, _ := range pair.output {
+      for j, _ := range pair.output[i] {
+        if v[i][j] != pair.output[i][j] {
+          t.Error(
+            "For", pair.matches,
+            "expected", pair.output[i][j],
+            "got", v[i][j],
+          )
+        }
+      }
     }
   }
 }

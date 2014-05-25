@@ -1,11 +1,22 @@
 package main
 
 import (
-  "fmt"
-  //"encoding/json"
+  //"fmt"
 )
 
-func MatchAttributes(facts []map[string]interface{}, attributes map[string]interface{}) {
-  fmt.Println(facts)
-  fmt.Println(attributes)
+func MatchAttributes(facts []map[string]interface{}, attributes map[string]interface{}) []map[string]interface{} {
+  var output []map[string]interface{}
+  for _, fact := range facts {
+    flag := true
+    for k, value := range attributes {
+      if (fact[k] != value) {
+        flag = false
+        break
+      }
+    }
+    if (flag) {
+      output = append(output, fact)
+    }
+  }
+  return output
 }
