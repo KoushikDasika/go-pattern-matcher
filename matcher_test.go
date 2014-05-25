@@ -14,12 +14,12 @@ var facts = []map[string]interface{}{
 }
 
 type matching_test_pair struct {
-  matches map[string]interface{}
+  matches map[string]map[string]interface{}
   output []map[string]interface{}
 }
 
 var matching_tests = []matching_test_pair{
-  { map[string]interface{} {"type": "A"} ,  []map[string]interface{} {
+  { map[string]map[string]interface{} {"type": {"operator": "==", "value": "A"}} ,  []map[string]interface{} {
     {"id": 1, "type": "A", "sku": "E031", "amount": 100},
     {"id": 3, "type": "A", "sku": "E033", "amount": 300},
     {"id": 5, "type": "A", "sku": "E035", "amount": 500},
