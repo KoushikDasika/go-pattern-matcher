@@ -4,8 +4,8 @@ import (
   "fmt"
 )
 
-func MatchAttributes(facts []map[string]string, attributes map[string]map[string]string) []map[string]string {
-  var output []map[string]string
+func MatchAttributes(facts []map[string]interface{} , attributes map[string]map[string]interface{}) []map[string]interface{}  {
+  var output []map[string]interface{}
   for _, fact := range facts {
     flag := true
     for k, v := range attributes {
